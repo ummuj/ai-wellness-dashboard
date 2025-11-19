@@ -408,11 +408,12 @@
             // This is only for local testing or within a secure environment.
             // For GitHub Pages, use a proxy/serverless function to hide the key.
             // Replace 'YOUR_GEMINI_API_KEY_HERE' with your key for local testing.
-            const apiKey = ""; // Keep this as an empty string when sharing the code.
+            // const apiKey = ""; // Keep this as an empty string when sharing the code.
 
             // --- API Configuration ---
             const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
-            const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+            // const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+            const PROXY_API_URL = "api/gemini-proxy";
             const MAX_RETRIES = 5;
 
             const chartColors = {
