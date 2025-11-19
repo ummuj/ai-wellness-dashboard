@@ -505,11 +505,7 @@
                 });
             }
 
-            async function analyzeFoodImage(base64Data, mimeType) {
-                if (apiKey === "") {
-                    analysisMessage.textContent = 'API Key missing. Cannot run image analysis on a public deployment.';
-                    return null;
-                }
+            async function analyzeFoodImage(base64Data, mimeType) {               
                 analysisText.textContent = 'Analyzing...';
                 analysisSpinner.classList.remove('hidden');
                 analyzeButton.disabled = true;
@@ -529,6 +525,7 @@
                 };
 
                 const payload = {
+                    model: GEMINI_MODEL,
                     contents: [
                         {
                             role: "user",
@@ -550,7 +547,7 @@
                 };
 
                 try {
-                    const result = await fetchWithRetry(GEMINI_API_URL, {
+                    const result = await fetchWithRetry(PROXY_API_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
@@ -650,13 +647,13 @@
                 };
 
                 try {
-                    const result = await fetchWithRetry(GEMINI_API_URL, {
+                    const result = await fetchWithRetry(PROXY_API_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
 
-                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text || 
+                    const text = result.text || 
                                  "Could not generate a personalized insight. Please check your network connection or try again later.";
                     
                     // Display the generated text
