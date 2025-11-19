@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport<" content="width=device-width, initial-scale=1.0">
-    <title>AI-Powered Wellness Dashboard</title>
+    <title>Wellness Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -121,7 +121,7 @@
     <header class="bg-white shadow-md">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <h1 class="text-3xl font-bold text-center" style="color: var(--c-dark-blue);">
-                AI-Powered Wellness Dashboard
+                Wellness Dashboard
             </h1>
         </nav>
     </header>
@@ -133,7 +133,7 @@
                 Log Your Daily Wellness
             </h2>
             <p class="text-center text-gray-600 mb-8">
-                Fill out your metrics for today to generate your personalized dashboard and AI summary.
+                Fill out your metrics for today to generate your personalized dashboard.
             </p>
             
             <form id="wellness-form" class="space-y-6">
@@ -194,7 +194,7 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-3">Nutrition Input</h3>
                     <div class="space-y-4 mb-4 p-4 border rounded-lg bg-gray-50">
-                        <label for="food-image" class="form-label">Estimate from Photo (Optional)</label>
+                        <label for="food-image" class="form-label">Estimate from Photo (Optional - Disabled)</label>
                         <input type="file" id="food-image" accept="image/*" class="w-full text-sm text-gray-500
                             file:mr-4 file:py-2 file:px-4
                             file:rounded-full file:border-0
@@ -202,7 +202,7 @@
                             file:bg-blue-50 file:text-blue-700
                             hover:file:bg-blue-100 cursor-pointer
                         ">
-                        <button type="button" id="analyze-button" class="btn-secondary flex items-center justify-center space-x-2 w-full">
+                        <button type="button" id="analyze-button" class="btn-secondary flex items-center justify-center space-x-2 w-full" disabled>
                             <span id="analysis-text">Analyze Food Photo</span>
                             <div id="analysis-spinner" class="hidden loading-spinner"></div>
                         </button>
@@ -211,23 +211,11 @@
 
                     <h3 class="text-lg font-semibold mb-3">Manual Nutrition Entry</h3>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div>
+                        <div class="md:col-span-1">
                             <label for="calories" class="form-label text-sm">Calories</label>
                             <input type="number" id="calories" name="calories" class="form-input" min="0" value="2100">
                         </div>
-                        <div>
-                            <label for="protein" class="form-label text-sm">Protein (g)</label>
-                            <input type="number" id="protein" name="protein" class="form-input" min="0" value="120">
                         </div>
-                        <div>
-                            <label for="carbs" class="form-label text-sm">Carbs (g)</label>
-                            <input type="number" id="carbs" name="carbs" class="form-input" min="0" value="250">
-                        </div>
-                        <div>
-                            <label for="fat" class="form-label text-sm">Fat (g)</label>
-                            <input type="number" id="fat" name="fat" class="form-input" min="0" value="70">
-                        </div>
-                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -243,27 +231,13 @@
 
                 <div class="text-center pt-4">
                     <button type="submit" class="btn-primary w-full sm:w-auto">
-                        Generate My Dashboard & Insights
+                        Generate My Dashboard
                     </button>
                 </div>
             </form>
         </section>
 
         <section id="dashboard-section" class="hidden space-y-12 transition-opacity duration-500">
-
-            <!-- New AI Insight Section -->
-            <div id="ai-insight-card" class="bg-indigo-50 p-6 rounded-lg shadow-2xl border-2 border-indigo-200">
-                <h2 class="text-3xl font-bold mb-4 flex items-center" style="color: var(--c-dark-blue);">
-                    <span class="mr-3 text-indigo-600">🧠</span> AI-Powered Insight
-                </h2>
-                <div id="ai-insight-content">
-                    <!-- Content will be injected here -->
-                    <div class="flex items-center space-x-3 text-indigo-600 font-semibold">
-                        <div class="loading-spinner"></div>
-                        <span>Analyzing data and generating personalized summary...</span>
-                    </div>
-                </div>
-            </div>
             
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-2xl font-bold mb-4" style="color: var(--c-dark-blue);">
@@ -364,16 +338,9 @@
                     Nutrition & Trends
                 </h2>
                 <p class="text-gray-600 mb-6">
-                    A look at your macronutrient balance and a sample of how your weight trend could look over time.
+                    A look at how your weight trend could look over time.
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 p-4 rounded-lg shadow-inner">
-                        <h3 class="font-semibold text-center mb-3">Macronutrient Breakdown</h3>
-                        <div class="chart-container">
-                            <canvas id="macroChart"></canvas>
-                        </div>
-                        <p id="macro-text" class="text-center text-sm text-gray-600 mt-4">...</p>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
                     <div class="bg-gray-50 p-4 rounded-lg shadow-inner">
                         <h3 class="font-semibold text-center mb-3">Weight Trend (Sample)</h3>
                         <div class="chart-container">
@@ -388,7 +355,7 @@
     </main>
 
     <footer class="text-center p-8 mt-12 text-gray-500 text-sm">
-        A dynamic infographic SPA created with HTML, Tailwind CSS, and Chart.js. Now featuring AI-Powered insights via the Gemini API!
+        A dynamic infographic SPA created with HTML, Tailwind CSS, and Chart.js.
     </footer>
 
     <script>
@@ -401,20 +368,9 @@
             const analysisText = document.getElementById('analysis-text');
             const analysisSpinner = document.getElementById('analysis-spinner');
             const analysisMessage = document.getElementById('analysis-message');
-            const aiInsightContent = document.getElementById('ai-insight-content');
+            // const aiInsightContent = document.getElementById('ai-insight-content'); // Removed AI element reference
 
-            // ⚠️ SECURITY WARNING: 
-            // In a real, shared application, NEVER hardcode your API key here.
-            // This is only for local testing or within a secure environment.
-            // For GitHub Pages, use a proxy/serverless function to hide the key.
-            // Replace 'YOUR_GEMINI_API_KEY_HERE' with your key for local testing.
-            // const apiKey = ""; // Keep this as an empty string when sharing the code.
-
-            // --- API Configuration ---
-            const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
-            // const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-            const PROXY_API_URL = "api/gemini-proxy";
-            const MAX_RETRIES = 5;
+            // --- API Configuration (REMOVED) ---
 
             const chartColors = {
                 blue: 'rgba(62, 146, 204, 0.8)',
@@ -469,33 +425,10 @@
                 return lines;
             }
 
-            // --- LLM API Call Utility ---
-            const fetchWithRetry = async (url, options) => {
-                let delay = 1000;
-                for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-                    try {
-                        const response = await fetch(url, options);
-                        if (!response.ok) {
-                            if (response.status === 429 && attempt < MAX_RETRIES) {
-                                throw new Error('Too Many Requests (429)');
-                            }
-                            const errorBody = await response.json().catch(() => ({}));
-                            throw new Error(`HTTP error! status: ${response.status}, message: ${errorBody.error?.message || 'Unknown error'}`);
-                        }
-                        return await response.json();
-                    } catch (error) {
-                        if (attempt === MAX_RETRIES) {
-                            console.error("API call failed after max retries:", error);
-                            throw error;
-                        }
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2;
-                    }
-                }
-            };
+            // --- LLM API Call Utility (REMOVED) ---
+            // const fetchWithRetry = async (url, options) => { ... };
 
-
-            // --- Feature 1: Image-to-JSON Nutrition Analysis ---
+            // --- Feature 1: Image-to-JSON Nutrition Analysis (DISABLED) ---
             function fileToBase64(file) {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
@@ -506,62 +439,8 @@
             }
 
             async function analyzeFoodImage(base64Data, mimeType) {               
-                analysisText.textContent = 'Analyzing...';
-                analysisSpinner.classList.remove('hidden');
-                analyzeButton.disabled = true;
-                analysisMessage.textContent = 'Please wait, analyzing image...';
-                
-                const userPrompt = "Analyze this image of food and provide an estimate of its macronutrients and calories in JSON format. Provide all values as integers (e.g., 50, not 50.5 or 50g). If you cannot determine a value, use 0. Return ONLY the JSON object, no introductory text.";
-                
-                const jsonSchema = {
-                    type: "OBJECT",
-                    properties: {
-                        "calories": { "type": "INTEGER", "description": "Estimated total calories." },
-                        "protein": { "type": "INTEGER", "description": "Estimated protein in grams." },
-                        "carbs": { "type": "INTEGER", "description": "Estimated carbohydrates in grams." },
-                        "fat": { "type": "INTEGER", "description": "Estimated fat in grams." }
-                    },
-                    required: ["calories", "protein", "carbs", "fat"]
-                };
-
-                const payload = {
-                    model: GEMINI_MODEL,
-                    contents: [
-                        {
-                            role: "user",
-                            parts: [
-                                { text: userPrompt },
-                                {
-                                    inlineData: {
-                                        mimeType: mimeType,
-                                        data: base64Data
-                                    }
-                                }
-                            ]
-                        }
-                    ],
-                    generationConfig: {
-                        responseMimeType: "application/json",
-                        responseSchema: jsonSchema
-                    }
-                };
-
-                try {
-                    const result = await fetchWithRetry(PROXY_API_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    
-                    const jsonString = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (jsonString) {
-                        return JSON.parse(jsonString);
-                    }
-                    return null;
-
-                } catch (error) {
-                    throw new Error(`Food analysis failed: ${error.message}`);
-                }
+                // Original AI Image Analysis logic removed/disabled.
+                return null;
             }
 
             foodImageInput.addEventListener('change', () => {
@@ -575,95 +454,17 @@
                     analysisMessage.textContent = 'Please select a food image first.';
                     return;
                 }
-                if (apiKey === "") {
-                    analysisMessage.textContent = 'API Key is missing. Check instructions for deployment!';
-                    return;
-                }
-
-                try {
-                    const base64Data = await fileToBase64(file);
-                    const mimeType = file.type;
-                    
-                    const nutritionData = await analyzeFoodImage(base64Data, mimeType);
-
-                    if (nutritionData) {
-                        document.getElementById('calories').value = nutritionData.calories || 0;
-                        document.getElementById('protein').value = nutritionData.protein || 0;
-                        document.getElementById('carbs').value = nutritionData.carbs || 0;
-                        document.getElementById('fat').value = nutritionData.fat || 0;
-                        analysisMessage.textContent = `Analysis complete! Estimated ${nutritionData.calories} calories loaded into form.`;
-                    } else {
-                        analysisMessage.textContent = 'Could not parse nutrition data. Please try another image.';
-                    }
-                } catch (error) {
-                    console.error("Food Analysis Error:", error);
-                    analysisMessage.textContent = `An error occurred: ${error.message}.`;
-                } finally {
-                    analysisText.textContent = 'Analyze Food Photo';
-                    analysisSpinner.classList.add('hidden');
-                    analyzeButton.disabled = false;
-                }
+                
+                // Since this feature is disabled due to API complexity/removal, just display a message.
+                analysisText.textContent = 'Analyze Food Photo';
+                analysisSpinner.classList.add('hidden');
+                analyzeButton.disabled = true;
+                analysisMessage.textContent = '⚠️ Image analysis feature disabled.';
             });
 
 
-            // --- Feature 2: LLM Wellness Insight Generation (New Feature) ---
-
-            async function generateWellnessInsight(data) {
-                aiInsightContent.innerHTML = `
-                    <div class="flex items-center space-x-3 text-indigo-600 font-semibold">
-                        <div class="loading-spinner"></div>
-                        <span>Analyzing data and generating personalized summary...</span>
-                    </div>
-                `;
-
-                if (apiKey === "") {
-                    aiInsightContent.innerHTML = `<p class="text-red-500 font-semibold">
-                        ⚠️ API Key is missing. The AI Insight feature will not work until you deploy securely with a proxy or add your key locally. See the deployment instructions.
-                    </p>`;
-                    return;
-                }
-
-
-                // System Instruction to define the AI's role and output format
-                const systemPrompt = "Act as a friendly, motivational, and expert wellness coach. Based on the user's daily metrics, provide a personalized, concise, single-paragraph summary of their day's performance (identifying 1-2 strengths and 1 area for improvement) and give one specific, actionable tip for tomorrow. Do not use markdown headers, lists, or bullet points. The advice must be contextually relevant to the lowest-performing metric.";
-
-                // User Query containing all the collected data
-                const userQuery = `
-                    Generate a wellness insight for the following metrics:
-                    - Sleep: ${data.sleepHours} hours (Quality: ${data.sleepQuality}/10)
-                    - Stress Level: ${data.stressLevel}/10
-                    - Mood: ${data.mood}
-                    - Activity: ${data.steps} steps, ${data.exerciseMinutes} mins of ${data.exerciseType}
-                    - Nutrition: ${data.calories} Calories, ${data.protein}g Protein, ${data.carbs}g Carbs, ${data.fat}g Fat
-                    - Hydration: ${data.waterGlasses} glasses
-                    - Weight: ${data.weight} kg
-                `;
-
-                const payload = {
-                    contents: [{ parts: [{ text: userQuery }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] },
-                    // Using Google Search grounding to ensure advice is grounded in current wellness knowledge
-                    tools: [{ "google_search": {} }],
-                };
-
-                try {
-                    const result = await fetchWithRetry(PROXY_API_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    const text = result.text || 
-                                 "Could not generate a personalized insight. Please check your network connection or try again later.";
-                    
-                    // Display the generated text
-                    aiInsightContent.innerHTML = `<p class="text-gray-800 leading-relaxed">${text}</p>`;
-
-                } catch (error) {
-                    console.error("Gemini Insight Error:", error);
-                    aiInsightContent.innerHTML = `<p class="text-red-500">Error generating AI Insight: ${error.message}. Ensure your API key is correctly configured.</p>`;
-                }
-            }
+            // --- Feature 2: LLM Wellness Insight Generation (REMOVED) ---
+            // async function generateWellnessInsight(data) { ... }
 
 
             // --- Main Form Submission Handler ---
@@ -679,10 +480,11 @@
                     steps: parseInt(formData.get('steps')),
                     exerciseMinutes: parseInt(formData.get('exercise-minutes')),
                     exerciseType: formData.get('exercise-type'),
+                    
+                    // Only calories remain
                     calories: parseInt(formData.get('calories')),
-                    protein: parseInt(formData.get('protein')),
-                    carbs: parseInt(formData.get('carbs')),
-                    fat: parseInt(formData.get('fat')),
+                    // protein, carbs, fat inputs removed
+
                     waterGlasses: parseInt(formData.get('water-glasses')),
                     weight: parseFloat(formData.get('weight')),
                 };
@@ -694,7 +496,7 @@
                     dashboardSection.style.opacity = 1;
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     initDashboard(data);
-                    generateWellnessInsight(data); // <--- CALL THE LLM FEATURE
+                    // generateWellnessInsight(data); // LLM Feature Removed
                 }, 500);
             });
 
@@ -713,7 +515,7 @@
                 displayMoodAndWater(data.mood, data.waterGlasses);
                 createStepsChart(data.steps);
                 createExerciseChart(data.exerciseMinutes);
-                createMacroChart(data.protein, data.carbs, data.fat);
+                // createMacroChart(data.protein, data.carbs, data.fat); // Macro chart removed
                 createWeightTrendChart();
             }
 
@@ -864,30 +666,7 @@
                 document.getElementById('exercise-text').textContent = exerciseText;
             }
 
-            function createMacroChart(protein, carbs, fat) {
-                const existingChart = Chart.getChart('macroChart');
-                if (existingChart) existingChart.destroy();
-                const ctx = document.getElementById('macroChart').getContext('2d');
-                const total = protein + carbs + fat;
-                new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: ['Protein (g)', 'Carbs (g)', 'Fat (g)'],
-                        datasets: [{
-                            data: [protein, carbs, fat],
-                            backgroundColor: [chartColors.blue, chartColors.yellow, chartColors.red],
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { ...tooltipPlugin.plugins,
-                            legend: { position: 'bottom' }
-                        }
-                    }
-                });
-                document.getElementById('macro-text').textContent = `Total macros: ${total.toFixed(0)}g`;
-            }
+            // function createMacroChart(protein, carbs, fat) { ... } // Removed
 
             function createWeightTrendChart() {
                 const existingChart = Chart.getChart('weightTrendChart');
