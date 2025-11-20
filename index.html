@@ -192,9 +192,9 @@
                 <hr class="my-6">
 
                 <div>
-                    <h3 class="text-lg font-semibold mb-3">Nutrition Input</h3>
+                    <h3 class="text-lg font-semibold mb-3">Nutrition Input (Calories Only)</h3>
                     <div class="space-y-4 mb-4 p-4 border rounded-lg bg-gray-50">
-                        <label for="food-image" class="form-label">Estimate from Photo (Optional - Disabled)</label>
+                        <label for="food-image" class="form-label">Estimate Calories from Photo</label>
                         <input type="file" id="food-image" accept="image/*" class="w-full text-sm text-gray-500
                             file:mr-4 file:py-2 file:px-4
                             file:rounded-full file:border-0
@@ -209,14 +209,50 @@
                         <p id="analysis-message" class="text-sm text-gray-600 mt-2 h-4"></p>
                     </div>
 
-                    <h3 class="text-lg font-semibold mb-3">Manual Nutrition Entry</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="md:col-span-1">
-                            <label for="calories" class="form-label text-sm">Calories</label>
-                            <input type="number" id="calories" name="calories" class="form-input" min="0" value="2100">
+                    <h3 class="text-lg font-semibold mb-3">Manual Calorie Entry by Meal</h3>
+                    <div id="meal-tracking" class="space-y-6">
+
+                        <div class="p-4 border rounded-lg bg-white shadow-sm">
+                            <h4 class="font-bold mb-3 text-base" style="color: var(--c-dark-blue);">Breakfast</h4>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <label for="bf-calories" class="form-label text-sm">Calories</label>
+                                    <input type="number" id="bf-calories" name="bf-calories" class="form-input" min="0" value="500">
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="p-4 border rounded-lg bg-white shadow-sm">
+                            <h4 class="font-bold mb-3 text-base" style="color: var(--c-dark-blue);">Lunch</h4>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <label for="ln-calories" class="form-label text-sm">Calories</label>
+                                    <input type="number" id="ln-calories" name="ln-calories" class="form-input" min="0" value="700">
+                                </div>
+                            </div>
                         </div>
-                </div>
+
+                        <div class="p-4 border rounded-lg bg-white shadow-sm">
+                            <h4 class="font-bold mb-3 text-base" style="color: var(--c-dark-blue);">Dinner</h4>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <label for="dn-calories" class="form-label text-sm">Calories</label>
+                                    <input type="number" id="dn-calories" name="dn-calories" class="form-input" min="0" value="600">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border rounded-lg bg-white shadow-sm">
+                            <h4 class="font-bold mb-3 text-base" style="color: var(--c-dark-blue);">Snacks</h4>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <label for="sn-calories" class="form-label text-sm">Calories</label>
+                                    <input type="number" id="sn-calories" name="sn-calories" class="form-input" min="0" value="300">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -425,10 +461,9 @@
                 return lines;
             }
 
-            // --- LLM API Call Utility (REMOVED) ---
-            // const fetchWithRetry = async (url, options) => { ... };
-
-            // --- Feature 1: Image-to-JSON Nutrition Analysis (DISABLED) ---
+            // --- Feature 1: Image-to-JSON Nutrition Analysis (SIMULATED) ---
+            
+            // Helper function (still included but not used for API call)
             function fileToBase64(file) {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
@@ -438,13 +473,9 @@
                 });
             }
 
-            async function analyzeFoodImage(base64Data, mimeType) {               
-                // Original AI Image Analysis logic removed/disabled.
-                return null;
-            }
-
             foodImageInput.addEventListener('change', () => {
-                analyzeButton.disabled = foodImageInput.files.length === 0;
+                // Re-enable the button on file select
+                analyzeButton.disabled = foodImageInput.files.length === 0; 
                 analysisMessage.textContent = foodImageInput.files.length > 0 ? `${foodImageInput.files[0].name} ready for analysis.` : '';
             });
 
@@ -455,11 +486,21 @@
                     return;
                 }
                 
-                // Since this feature is disabled due to API complexity/removal, just display a message.
+                analysisText.textContent = 'Analyzing...';
+                analysisSpinner.classList.remove('hidden');
+                analyzeButton.disabled = true;
+
+                // --- SIMULATED IMAGE ANALYSIS LOGIC ---
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1500)); 
+                // Estimate 200-1000 calories
+                const simulatedCalories = Math.floor(Math.random() * 800) + 200; 
+                
+                analysisMessage.innerHTML = `✅ **Estimated Calories:** <b>${simulatedCalories}</b>. Please manually enter this value into the relevant meal/snack field.`;
+                
                 analysisText.textContent = 'Analyze Food Photo';
                 analysisSpinner.classList.add('hidden');
-                analyzeButton.disabled = true;
-                analysisMessage.textContent = '⚠️ Image analysis feature disabled.';
+                analyzeButton.disabled = false;
             });
 
 
@@ -472,6 +513,19 @@
                 e.preventDefault();
                 
                 const formData = new FormData(wellnessForm);
+
+                // Helper to get total calories across all meals
+                const getCalorieTotal = () => {
+                    const meals = ['bf', 'ln', 'dn', 'sn'];
+                    let total = 0;
+                    for (const meal of meals) {
+                        // Use the meal-specific names: e.g., 'bf-calories'
+                        const value = parseInt(formData.get(`${meal}-calories`)) || 0;
+                        total += value;
+                    }
+                    return total;
+                };
+
                 const data = {
                     sleepHours: parseFloat(formData.get('sleep-hours')),
                     sleepQuality: parseInt(formData.get('sleep-quality')),
@@ -481,10 +535,9 @@
                     exerciseMinutes: parseInt(formData.get('exercise-minutes')),
                     exerciseType: formData.get('exercise-type'),
                     
-                    // Only calories remain
-                    calories: parseInt(formData.get('calories')),
-                    // protein, carbs, fat inputs removed
-
+                    // Summing up meal calorie inputs
+                    calories: getCalorieTotal(),
+                    
                     waterGlasses: parseInt(formData.get('water-glasses')),
                     weight: parseFloat(formData.get('weight')),
                 };
@@ -496,7 +549,6 @@
                     dashboardSection.style.opacity = 1;
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     initDashboard(data);
-                    // generateWellnessInsight(data); // LLM Feature Removed
                 }, 500);
             });
 
@@ -515,7 +567,6 @@
                 displayMoodAndWater(data.mood, data.waterGlasses);
                 createStepsChart(data.steps);
                 createExerciseChart(data.exerciseMinutes);
-                // createMacroChart(data.protein, data.carbs, data.fat); // Macro chart removed
                 createWeightTrendChart();
             }
 
@@ -665,8 +716,6 @@
                 if (minutes >= target) exerciseText += ` You've hit the 30-minute target!`;
                 document.getElementById('exercise-text').textContent = exerciseText;
             }
-
-            // function createMacroChart(protein, carbs, fat) { ... } // Removed
 
             function createWeightTrendChart() {
                 const existingChart = Chart.getChart('weightTrendChart');
