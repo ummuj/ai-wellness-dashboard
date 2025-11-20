@@ -387,6 +387,12 @@
                 </div>
             </div>
 
+            <div class="text-center pt-4">
+                <button type="button" id="modify-button" class="btn-secondary w-full sm:w-auto">
+                    &larr; Modify Data
+                </button>
+            </div>
+
         </section>
     </main>
 
@@ -404,9 +410,7 @@
             const analysisText = document.getElementById('analysis-text');
             const analysisSpinner = document.getElementById('analysis-spinner');
             const analysisMessage = document.getElementById('analysis-message');
-            // const aiInsightContent = document.getElementById('ai-insight-content'); // Removed AI element reference
-
-            // --- API Configuration (REMOVED) ---
+            const modifyButton = document.getElementById('modify-button'); // New element reference
 
             const chartColors = {
                 blue: 'rgba(62, 146, 204, 0.8)',
@@ -463,7 +467,6 @@
 
             // --- Feature 1: Image-to-JSON Nutrition Analysis (SIMULATED) ---
             
-            // Helper function (still included but not used for API call)
             function fileToBase64(file) {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
@@ -474,7 +477,6 @@
             }
 
             foodImageInput.addEventListener('change', () => {
-                // Re-enable the button on file select
                 analyzeButton.disabled = foodImageInput.files.length === 0; 
                 analysisMessage.textContent = foodImageInput.files.length > 0 ? `${foodImageInput.files[0].name} ready for analysis.` : '';
             });
@@ -491,9 +493,7 @@
                 analyzeButton.disabled = true;
 
                 // --- SIMULATED IMAGE ANALYSIS LOGIC ---
-                // Simulate API delay
                 await new Promise(resolve => setTimeout(resolve, 1500)); 
-                // Estimate 200-1000 calories
                 const simulatedCalories = Math.floor(Math.random() * 800) + 200; 
                 
                 analysisMessage.innerHTML = `✅ **Estimated Calories:** <b>${simulatedCalories}</b>. Please manually enter this value into the relevant meal/snack field.`;
@@ -502,10 +502,6 @@
                 analysisSpinner.classList.add('hidden');
                 analyzeButton.disabled = false;
             });
-
-
-            // --- Feature 2: LLM Wellness Insight Generation (REMOVED) ---
-            // async function generateWellnessInsight(data) { ... }
 
 
             // --- Main Form Submission Handler ---
@@ -519,7 +515,6 @@
                     const meals = ['bf', 'ln', 'dn', 'sn'];
                     let total = 0;
                     for (const meal of meals) {
-                        // Use the meal-specific names: e.g., 'bf-calories'
                         const value = parseInt(formData.get(`${meal}-calories`)) || 0;
                         total += value;
                     }
@@ -535,7 +530,6 @@
                     exerciseMinutes: parseInt(formData.get('exercise-minutes')),
                     exerciseType: formData.get('exercise-type'),
                     
-                    // Summing up meal calorie inputs
                     calories: getCalorieTotal(),
                     
                     waterGlasses: parseInt(formData.get('water-glasses')),
@@ -551,6 +545,18 @@
                     initDashboard(data);
                 }, 500);
             });
+
+            // --- New Feature: Modify Data Button Handler ---
+            modifyButton.addEventListener('click', () => {
+                dashboardSection.style.opacity = 0;
+                setTimeout(() => {
+                    dashboardSection.classList.add('hidden');
+                    formSection.classList.remove('hidden');
+                    formSection.style.opacity = 1;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 500);
+            });
+            // --- End New Feature ---
 
 
             // --- Dashboard Initialization (Visualizations) ---
